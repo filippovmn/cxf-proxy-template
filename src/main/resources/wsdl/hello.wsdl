@@ -1,0 +1,66 @@
+<definitions name = "HelloService"
+             targetNamespace = "http://www.examples.com/wsdl/HelloService.wsdl"
+             xmlns = "http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap = "http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns = "http://www.examples.com/wsdl/HelloService.wsdl"
+             xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
+    <types>
+        <xsd:schema targetNamespace = "http://www.examples.com/wsdl/HelloService.wsdl" elementFormDefault="qualified">
+            <xsd:element name="SayHelloRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" 
+                                     name="Request" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="SayHelloResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" maxOccurs="1" 
+                                     name="Response" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <message name = "SayHelloRequest">
+        <part name = "SayHelloRequest" element = "tns:SayHelloRequest" />
+    </message>
+	
+    <message name = "SayHelloResponse">
+        <part name = "SayHelloResponse" element = "tns:SayHelloResponse"/>
+    </message>
+
+    <portType name = "Hello_PortType">
+        <operation name = "sayHello">
+            <input message = "tns:SayHelloRequest"/>
+            <output message = "tns:SayHelloResponse"/>
+        </operation>
+    </portType>
+
+    <binding name = "Hello_Binding" type = "tns:Hello_PortType">
+        <soap:binding style = "document"
+                      transport = "http://schemas.xmlsoap.org/soap/http"/>
+        <operation name = "sayHello">
+            <soap:operation soapAction = "http://www.examples.com/wsdl/HelloService.wsdl#sayHello" style="document"/>
+            <input>
+                <soap:body
+                    use="literal"/>
+            </input>
+		
+            <output>
+                <soap:body
+                    use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name = "Hello_Service">
+        <documentation>WSDL File for HelloService</documentation>
+        <port binding = "tns:Hello_Binding" name = "Hello_Port">
+            <soap:address
+                location = "http://www.examples.com/SayHello/" />
+        </port>
+    </service>
+</definitions>
